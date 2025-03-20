@@ -7,6 +7,8 @@ const Navbar = () => {
 
     const toggleMobileMenu = () => setMobileMenuOpen(!isMobileMenuOpen);
     const toggleProfileMenu = () => setProfileMenuOpen(!isProfileMenuOpen);
+    const closeProfileMenu = () => setProfileMenuOpen(false);
+    const closemobileMenu = () => setMobileMenuOpen(false);
 
     return (
         <nav className="bg-gradient-to-r from-[#660066d0] via-purple-800 to-[#9900cc]">
@@ -33,7 +35,7 @@ const Navbar = () => {
 
                     <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                         <div className="flex shrink-0 items-center">
-                            <img className="h-8 w-auto" src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company" />
+                            <img className="h-8 w-auto" src="./icon.png" alt="Your Company" />
                         </div>
                         <div className="hidden sm:ml-6 sm:block">
                             <div className="flex space-x-4">
@@ -66,9 +68,9 @@ const Navbar = () => {
 
                         {isProfileMenuOpen && (
                             <div className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                <NavLink to="/dashboard" className="block px-4 py-2 text-sm text-gray-700">Your Profile</NavLink>
-                                <NavLink to="#" className="block px-4 py-2 text-sm text-gray-700">Settings</NavLink>
-                                <NavLink to="#" className="block px-4 py-2 text-sm text-gray-700">Sign out</NavLink>
+                                <NavLink to="/dashboard" className="block px-4 py-2 text-sm text-gray-700" onClick={closeProfileMenu}>Your Profile</NavLink>
+                                <NavLink to="#" className="block px-4 py-2 text-sm text-gray-700" onClick={closeProfileMenu}>Settings</NavLink>
+                                <NavLink to="#" className="block px-4 py-2 text-sm text-gray-700" onClick={closeProfileMenu}>Sign out</NavLink>
                             </div>
                         )}
                     </div>
@@ -76,12 +78,13 @@ const Navbar = () => {
             </div>
 
             {isMobileMenuOpen && (
-                <div className="sm:hidden" id="mobile-menu">
-                    <div className="space-y-1 px-2 pb-3 pt-2">
+                <div className="sm:hidden fixed inset-0 top-[58px] bg-black bg-opacity-50 z-50" id="mobile-menu">
+                    <div className="space-y-1 px-2 pb-3 pt-2 bg-gradient-to-r from-[#660066d0] via-purple-800 to-[#9900cc]">
                         {['/', '/register', '/report'].map((path, index) => (
                             <NavLink
                                 key={index}
                                 to={path}
+                                onClick={closemobileMenu}
                                 className={({ isActive }) =>
                                     isActive
                                         ? "block bg-gray-900 text-white px-3 py-2 rounded-md text-base font-medium"

@@ -35,7 +35,7 @@ const Attendance = () => {
     };
 
     return (
-        <div className="flex flex-col items-center">
+        <div className="min-h-screen flex flex-col items-center">
             <h1 className="text-3xl py-6 font-bold text-gray-800">Smart Attendance System</h1>
             <img src="./homepage.png" alt="Attendance Logo" className="mb-6 size-40 md:size-60" />
             <button

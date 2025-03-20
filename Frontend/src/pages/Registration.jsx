@@ -25,7 +25,7 @@ const Registration = () => {
   };
 
   return (
-    <div className="md:h-[90.8vh] bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900 flex items-center justify-center p-3">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900 flex items-center justify-center p-3">
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
