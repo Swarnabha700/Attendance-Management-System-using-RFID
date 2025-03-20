@@ -21,9 +21,9 @@ const DashBoard = () => {
                 {/* Sidebar */}
                 <motion.aside
                     initial={{ x: -200 }}
-                    animate={{ x: isSidebarOpen ? 0 : -200 }}
+                    animate={{ x: isSidebarOpen || window.innerWidth >= 768 ? 0 : -200 }}
                     transition={{ duration: 0.5 }}
-                    className="md:w-64 w-56 bg-gray-800 shadow-lg p-6 flex flex-col space-y-6 fixed md:relative top-32 md:top-0 left-0 z-20"
+                    className="md:w-64 w-56 bg-gray-800 shadow-lg p-6 flex flex-col space-y-6 md:relative fixed top-32 md:top-auto left-0 z-20 h-52 md:min-h-screen"
                 >
                     <nav className="space-y-4">
                         {[
@@ -48,7 +48,7 @@ const DashBoard = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.5 }}
-                    className="flex-1 p-8 ml-0 md:ml-64 mt-12 md:mt-0"
+                    className="flex-1 p-8 ml-0 mt-12 md:mt-0"
                 >
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {['Attendance', 'Assignments', 'Grades', 'Notifications', 'Events', 'Settings'].map((card, index) => (
