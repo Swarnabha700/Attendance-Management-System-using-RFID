@@ -6,12 +6,12 @@ const DashBoard = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+        <div className="min-h-screen bg-gradient-to-bl from-[#e9defa] to-[#fbfcdb] text-gray-800">
             {/* Navbar */}
-            <div className="w-full bg-gray-800 p-4 shadow-md flex justify-between items-center">
-                <h1 className="text-xl font-bold text-cyan-400">Student Dashboard</h1>
+            <div className="w-full bg-gray-900 p-4 shadow-md flex justify-between items-center">
+                <h1 className="text-xl font-bold text-white">Student Dashboard</h1>
                 <button 
-                    className="md:hidden text-cyan-400"
+                    className="md:hidden text-white"
                     onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
                     ☰
                 </button>
@@ -23,7 +23,7 @@ const DashBoard = () => {
                     initial={{ x: -200 }}
                     animate={{ x: isSidebarOpen || window.innerWidth >= 768 ? 0 : -200 }}
                     transition={{ duration: 0.5 }}
-                    className="md:w-64 w-56 bg-gray-800 shadow-lg p-6 flex flex-col space-y-6 md:relative fixed top-32 md:top-auto left-0 z-20 h-52 md:min-h-screen"
+                    className="md:w-64 w-56 bg-gray-900 shadow-lg p-6 flex flex-col space-y-6 md:relative fixed top-32 md:top-auto left-0 z-20 h-52 md:min-h-screen"
                 >
                     <nav className="space-y-4">
                         {[
@@ -34,10 +34,10 @@ const DashBoard = () => {
                             <motion.div
                                 key={index}
                                 whileHover={{ scale: 1.05 }}
-                                className="flex items-center gap-3 px-4 py-2 rounded-lg cursor-pointer bg-gray-700 hover:bg-cyan-600 transition-all"
+                                className="flex items-center gap-3 px-4 py-2 rounded-lg cursor-pointer bg-gray-700 hover:bg-teal-500 transition-all"
                             >
                                 {item.icon}
-                                <span>{item.name}</span>
+                                <span className="text-white">{item.name}</span>
                             </motion.div>
                         ))}
                     </nav>
@@ -55,10 +55,10 @@ const DashBoard = () => {
                             <motion.div
                                 key={index}
                                 whileHover={{ scale: 1.05 }}
-                                className="p-6 bg-gray-700 rounded-2xl shadow-lg cursor-pointer transition-all hover:bg-cyan-600"
+                                className="p-6 bg-gradient-to-br from-[#2097ff] to-[#b640ff] rounded-2xl shadow-lg cursor-pointer"
                             >
-                                <h2 className="text-xl font-bold mb-2">{card}</h2>
-                                <p className="text-sm text-gray-300">Click to view details</p>
+                                <h2 className="text-xl font-bold mb-2 text-white">{card}</h2>
+                                <p className="text-sm font-semibold text-black">Click to view details</p>
                             </motion.div>
                         ))}
                     </div>

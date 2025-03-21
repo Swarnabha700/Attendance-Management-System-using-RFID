@@ -35,51 +35,59 @@ const Attendance = () => {
     };
 
     return (
-        <div className="min-h-screen flex flex-col items-center">
-            <h1 className="text-3xl py-6 font-bold text-gray-800">Smart Attendance System</h1>
-            <img src="./homepage.png" alt="Attendance Logo" className="mb-6 size-40 md:size-60" />
-            <button
-                className="bg-purple-800 text-white py-2 px-4 rounded mb-6 shadow-md hover:bg-purple-950 transform transition-transform hover:scale-105 duration-300"
-                onClick={startAttendance}
-            >
-                Start Attendance
-            </button>
+        <div className='h-[90.8vh] bg-gradient-to-t from-[#77c2ff] to-[#cc79ff]'>
+            {/* Hero Section */}
+            <div className="flex flex-col items-center justify-center text-center text-white p-8">
+                <h1 className="text-6xl font-bold mb-4 drop-shadow-xl mt-20">Smart Attendance System</h1>
+                <p className="text-xl mb-8 max-w-3xl">Effortlessly manage and track attendance with real-time updates and seamless integration.</p>
+                <button
+                    className="bg-purple-800 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-purple-950 transform transition-transform hover:scale-105 duration-300"
+                    onClick={startAttendance}
+                >
+                    Start Attendance
+                </button>
+            </div>
 
-            {showModal && (
-                <div className="fixed inset-0 bg-black bg-opacity-70 flex flex-col items-center justify-center transition-opacity duration-500 ease-in-out ">
-                    <table className="w-11/12 bg-white border-collapse rounded-lg shadow-lg overflow-hidden">
-                        <thead>
-                            <tr className="bg-purple-900 text-white">
-                                <th className="p-2">Roll No.</th>
-                                <th className="p-2">Firstname</th>
-                                <th className="p-2">Lastname</th>
-                                <th className="p-2">Department</th>
-                                <th className="p-2">Subject Code</th>
-                                <th className="p-2">Entry at</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {records.map((record, index) => (
-                                <tr key={index} className="hover:bg-gray-100 transition-colors duration-200">
-                                    <td className="p-2 border">{record.roll}</td>
-                                    <td className="p-2 border">{record.fname}</td>
-                                    <td className="p-2 border">{record.lname}</td>
-                                    <td className="p-2 border">{record.department}</td>
-                                    <td className="p-2 border">{record.scode}</td>
-                                    <td className="p-2 border">{record.time}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    <button
-                        className="bg-red-500 text-white py-2 px-4 rounded mt-6 shadow-md hover:bg-red-700 transform transition-transform hover:scale-105 duration-300"
-                        onClick={stopAttendance}
-                    >
-                        Stop Attendance
-                    </button>
-                </div>
-            )}
-        </div>
+            {/* Main Content */}
+            <div className="flex flex-col items-center justify-center p-8">
+                {showModal && (
+                    <div className="fixed inset-0 bg-black bg-opacity-70 flex flex-col items-center justify-center transition-opacity duration-500 ease-in-out">
+                        <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-screen-lg overflow-x-auto">
+                            <table className="w-full table-auto">
+                                <thead>
+                                    <tr className="bg-purple-900 text-white">
+                                        <th className="p-2 text-left">Roll No.</th>
+                                        <th className="p-2 text-left">Firstname</th>
+                                        <th className="p-2 text-left">Lastname</th>
+                                        <th className="p-2 text-left">Department</th>
+                                        <th className="p-2 text-left">Subject Code</th>
+                                        <th className="p-2 text-left">Entry at</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {records.map((record, index) => (
+                                        <tr key={index} className="hover:bg-gray-100 transition-colors duration-200">
+                                            <td className="p-2 border">{record.roll}</td>
+                                            <td className="p-2 border">{record.fname}</td>
+                                            <td className="p-2 border">{record.lname}</td>
+                                            <td className="p-2 border">{record.department}</td>
+                                            <td className="p-2 border">{record.scode}</td>
+                                            <td className="p-2 border">{record.time}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                            <button
+                                className="bg-red-500 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-red-700 transform transition-transform hover:scale-105 duration-300 mt-6"
+                                onClick={stopAttendance}
+                            >
+                                Stop Attendance
+                            </button>
+                        </div>
+                    </div>
+                )}
+            </div>
+            </div>
     );
 };
 
