@@ -1,28 +1,54 @@
 CREATE USER C##attendance IDENTIFIED BY 123;
 GRANT DBA TO C##attendance;
 
+CREATE TABLE cards (
+    id VARCHAR2(20) PRIMARY KEY,
+    status VARCHAR2(20)
+);
+
 CREATE TABLE students (
-    roll NUMBER PRIMARY KEY,
+    roll VARCHAR2(20) PRIMARY KEY,
     fname VARCHAR2(50),
     lname VARCHAR2(50),
-    department VARCHAR2(50),
-    scode VARCHAR2(20),
-    card VARCHAR2(50) UNIQUE
+    department VARCHAR2(100),
+    scode VARCHAR2(10),
+    card_id VARCHAR2(20),
+    CONSTRAINT fk_card
+        FOREIGN KEY (card_id) REFERENCES cards(id)
 );
 
 CREATE TABLE attendance (
-    "Date" DATE PRIMARY KEY,
-    record CLOB
-);
-
-CREATE TABLE attendance_records (
-    roll NUMBER,
+    roll VARCHAR2(20),
     fname VARCHAR2(50),
     lname VARCHAR2(50),
-    department VARCHAR2(50),
-    scode VARCHAR2(20),
-    time VARCHAR2(10),
+    department VARCHAR2(100),
+    scode VARCHAR2(10),
+    attendance_time TIMESTAMP,
     CONSTRAINT fk_student FOREIGN KEY (roll) REFERENCES students(roll)
 );
 
+
+INSERT INTO cards VALUES ('f3265ea7', 'assigned');
+INSERT INTO cards VALUES ('b38ca433', 'assigned');
+INSERT INTO cards VALUES ('628181b', 'notassigned');
+INSERT INTO cards VALUES ('a04de1b', 'assigned');
+
+INSERT INTO students VALUES ('231001271168', 'Swarnabha', 'Chakraborty', 'Computer application', 'MCA', 'f3265ea7');
+INSERT INTO students VALUES ('231001271196', 'Bristi', 'Bhattacharjee', 'Computer application', 'MCA', 'b38ca433');
+INSERT INTO students VALUES ('231001271176', 'Sayan', 'Rajak Das', 'Computer application', 'MCA', 'a04de1b');
+
+INSERT INTO attendance VALUES (
+  '231001271168', 'Swarnabha', 'Chakraborty', 'Computer application', 'MCA',
+  TO_TIMESTAMP('2025-01-16 15:25:03', 'YYYY-MM-DD HH24:MI:SS')
+);
+
+INSERT INTO attendance VALUES (
+  '231001271176', 'Sayan Rajak', 'Das', 'Computer application', 'MCA',
+  TO_TIMESTAMP('2025-01-16 15:38:48', 'YYYY-MM-DD HH24:MI:SS')
+);
+
+INSERT INTO attendance VALUES (
+  '231001271196', 'Bristi', 'Bhattacharjee', 'Computer application', 'MCA',
+  TO_TIMESTAMP('2025-01-16 15:40:50', 'YYYY-MM-DD HH24:MI:SS')
+);
 

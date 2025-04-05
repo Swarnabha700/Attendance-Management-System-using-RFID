@@ -1,38 +1,64 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { startAttendance as apiStartAttendance, getAttendanceByDate } from '../store/apiService';
+import { fetchTodayAttendance } from '../store/apiService';
+
 
 const Attendance = () => {
     const [showModal, setShowModal] = useState(false);
     const [records, setRecords] = useState([]);
     const [fetchIntervalId, setFetchIntervalId] = useState(null);
 
-    const startAttendance = () => {
-        setShowModal(true);
-        axios.post('http://localhost:3000/startattendance')
-            .then(() => getAttendance())
-            .catch(error => console.error('Error:', error));
+
+    const startAttendance = async () => {
+        try {
+            await apiStartAttendance();
+            setShowModal(true);
+            getAttendance();
+        } catch (error) {
+            console.error('Error starting attendance:', error);
+        }   
     };
+
+
 
     const stopAttendance = () => {
         setShowModal(false);
         if (fetchIntervalId) clearInterval(fetchIntervalId);
     };
 
+    // const getAttendance = () => {
+    //     let prevLength = 0;
+    //     const intervalId = setInterval(() => {
+    //         axios.get('http://localhost:3000/addattendance')
+    //             .then(response => {
+    //                 const data = response.data;
+    //                 if (data.length > 0 && (prevLength === 0 || data[0].Record.length > prevLength)) {
+    //                     setRecords(data[0].Record);
+    //                     prevLength = data[0].Record.length;
+    //                 }
+    //             })
+    //             .catch(error => console.error('Error:', error));
+    //     }, 100);
+    //     setFetchIntervalId(intervalId);
+    // };
+
     const getAttendance = () => {
         let prevLength = 0;
-        const intervalId = setInterval(() => {
-            axios.get('http://localhost:3000/addattendance')
-                .then(response => {
-                    const data = response.data;
-                    if (data.length > 0 && (prevLength === 0 || data[0].Record.length > prevLength)) {
-                        setRecords(data[0].Record);
-                        prevLength = data[0].Record.length;
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-        }, 100);
+        const intervalId = setInterval(async () => {
+            try {
+                const data = await fetchTodayAttendance();
+                if (data.Record?.length > prevLength) {
+                    setRecords(data.Record);
+                    prevLength = data.Record.length;
+                }
+            } catch (error) {
+                console.error('Error fetching attendance:', error);
+            }
+        }, 100); 
         setFetchIntervalId(intervalId);
     };
+    
+    
 
     return (
         <div className='h-[90.8vh] bg-gradient-to-t from-[#77c2ff] to-[#cc79ff]'>

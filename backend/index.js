@@ -11,7 +11,7 @@ app.set('view engine', 'ejs');
 
 // ✅ Configure CORS properly
 app.use(cors({
-    origin: 'http://localhost:5177', // Allow frontend
+    origin: 'http://localhost:5173', // Allow frontend
     methods: 'GET,POST,PUT,DELETE',
     credentials: true, // Allow cookies & authentication headers
     allowedHeaders: 'Content-Type,Authorization',

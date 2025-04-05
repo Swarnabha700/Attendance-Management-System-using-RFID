@@ -39,3 +39,14 @@ export const getAttendanceByDate = async (date) => {
         throw error;
     }
 };
+
+export const fetchTodayAttendance = async () => {
+    try {
+        const response = await api.get('/addattendance');
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching today attendance:', error);
+        throw error;
+    }
+};
+
