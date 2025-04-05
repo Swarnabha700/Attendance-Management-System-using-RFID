@@ -113,7 +113,7 @@ export const registerStudent = async (req, res) => {
   const student = req.body;
   const cardId = await chooseCardId();
   if (cardId === -1) {
-    return res.status(404).json({ message: "No card left to assign" });
+    return res.status(404).json({ message: "No card is left to assign" });
   }
 
   await assignCard(cardId);
