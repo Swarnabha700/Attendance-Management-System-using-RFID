@@ -1,0 +1,28 @@
+CREATE USER C##attendance IDENTIFIED BY 123;
+GRANT DBA TO C##attendance;
+
+CREATE TABLE students (
+    roll NUMBER PRIMARY KEY,
+    fname VARCHAR2(50),
+    lname VARCHAR2(50),
+    department VARCHAR2(50),
+    scode VARCHAR2(20),
+    card VARCHAR2(50) UNIQUE
+);
+
+CREATE TABLE attendance (
+    "Date" DATE PRIMARY KEY,
+    record CLOB
+);
+
+CREATE TABLE attendance_records (
+    roll NUMBER,
+    fname VARCHAR2(50),
+    lname VARCHAR2(50),
+    department VARCHAR2(50),
+    scode VARCHAR2(20),
+    time VARCHAR2(10),
+    CONSTRAINT fk_student FOREIGN KEY (roll) REFERENCES students(roll)
+);
+
+
