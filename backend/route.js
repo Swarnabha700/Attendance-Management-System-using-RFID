@@ -84,7 +84,7 @@ router.post('/dailyreport', async (req, res) => {
     const result = await connection.execute(
       `SELECT roll, fname, lname, department, scode, attendance_time
        FROM attendance
-       WHERE TRUNC(attendance_time) = TO_DATE(:selectedDate, 'YYYY-MM-DD')`,
+       WHERE TRUNC(attendance_time) = TO_DATE(:selectedDate, 'YYYY-MM-DD') ORDER BY attendance_time ASC`,
       { selectedDate }
     );
   
@@ -95,9 +95,6 @@ router.post('/dailyreport', async (req, res) => {
     const records = result.rows.map(([roll, fname, lname, department, scode, attendance_time]) => {
       const formattedTime = new Date(attendance_time).toLocaleString('en-IN', {
         timeZone: 'Asia/Kolkata',
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit',
@@ -149,43 +146,79 @@ router.post('/addattendance', addAttendance);
 // });
 
 // /addattendance (GET - for today's record)
+// router.get('/addattendance', async (req, res) => {
+//     const connection = await getConnection();
+//     const today = getCurrentDate();
+  
+//     const result = await connection.execute(
+//       `SELECT roll, fname, lname, department, scode, attendance_time
+//        FROM attendance
+//        WHERE TRUNC(attendance_time) = TO_DATE(:today, 'YYYY-MM-DD')`,
+//       { today }
+//     );
+  
+//     const records = result.rows.map(([roll, fname, lname, department, scode, attendance_time]) => {
+//       const formattedTime = new Date(attendance_time).toLocaleString('en-IN', {
+//         timeZone: 'Asia/Kolkata',
+//         day: '2-digit',
+//         month: '2-digit',
+//         year: 'numeric',
+//         hour: '2-digit',
+//         minute: '2-digit',
+//         second: '2-digit',
+//       });
+  
+//       return {
+//         roll,
+//         fname,
+//         lname,
+//         department,
+//         scode,
+//         time: formattedTime
+//       };
+//     });
+  
+//     res.json({
+//       Date: today,
+//       Record: records
+//     });
+//   });
+  
 router.get('/addattendance', async (req, res) => {
-    const connection = await getConnection();
-    const today = getCurrentDate();
-  
-    const result = await connection.execute(
-      `SELECT roll, fname, lname, department, scode, attendance_time
-       FROM attendance
-       WHERE TRUNC(attendance_time) = TO_DATE(:today, 'YYYY-MM-DD')`,
-      { today }
-    );
-  
-    const records = result.rows.map(([roll, fname, lname, department, scode, attendance_time]) => {
-      const formattedTime = new Date(attendance_time).toLocaleString('en-IN', {
-        timeZone: 'Asia/Kolkata',
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-      });
-  
-      return {
-        roll,
-        fname,
-        lname,
-        department,
-        scode,
-        time: formattedTime
-      };
+  const connection = await getConnection();
+  const today = getCurrentDate();
+
+  const result = await connection.execute(
+    `SELECT roll, fname, lname, department, scode, attendance_time
+     FROM attendance
+     WHERE TRUNC(attendance_time) = TO_DATE(:today, 'YYYY-MM-DD')
+     ORDER BY attendance_time ASC`, 
+    { today }
+  );
+
+  const records = result.rows.map(([roll, fname, lname, department, scode, attendance_time]) => {
+    const formattedTime = new Date(attendance_time).toLocaleTimeString('en-IN', {
+      timeZone: 'Asia/Kolkata',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
     });
-  
-    res.json({
-      Date: today,
-      Record: records
-    });
+
+    return {
+      roll,
+      fname,
+      lname,
+      department,
+      scode,
+      time: formattedTime
+    };
   });
-  
+
+  res.json({
+    Date: today,
+    Record: records
+  });
+});
+
 
 export default router;

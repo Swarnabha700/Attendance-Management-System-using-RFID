@@ -152,7 +152,7 @@ export const addAttendance = async (req, res) => {
   );
 
   if (studentResult.rows.length === 0) {
-    return res.status(403).json({ message: "Denied" });
+    return res.status(403).send("denied");
   }
 
   const [roll, fname, lname, department, scode] = studentResult.rows[0];
@@ -166,7 +166,7 @@ export const addAttendance = async (req, res) => {
   );
 
   if (checkResult.rows.length > 0) {
-    return res.status(409).json({ message: `${fname} ${lname} has already been marked present` });
+    return res.status(409).send(`${fname} ${lname} has already been marked present`);
   }
 
   await connection.execute(
@@ -182,5 +182,5 @@ export const addAttendance = async (req, res) => {
     }
   );
 
-  res.status(200).json({ message: "Attendance recorded" });
+  res.status(200).send("granted");
 };

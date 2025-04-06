@@ -9,10 +9,10 @@
 #include <SPI.h>
 #include <MFRC522.h>
 
-const char* ssid = "realme GT 6T"; // wifi name
-const char* password = "7001844407"; // wifi password
+const char* ssid = "MGLBRI 4G"; // wifi name
+const char* password = "MGLBRI#1234"; // wifi password
 WiFiClient wifiClient;
-String serverName = "http://192.168.18.174:3000/addattendance"; // put ip address
+String serverName = "http://192.168.29.65:3000/addattendance"; // put ip address
 
 #define SS_PIN D4
 #define RST_PIN D0
