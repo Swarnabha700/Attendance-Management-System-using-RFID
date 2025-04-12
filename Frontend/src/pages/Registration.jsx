@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { registerStudent } from '../store/apiService';
 import { motion } from 'framer-motion';
 
 const Registration = () => {
@@ -11,6 +11,8 @@ const Registration = () => {
     scode: '',
   });
 
+  const [assignedCard, setAssignedCard] = useState(null); // New state to store assigned card
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -18,11 +20,28 @@ const Registration = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post('http://localhost:3000/register', formData)
-      .then((response) => alert('Student registered successfully!'))
-      .catch((error) => console.error('Error:', error));
+    registerStudent(formData)
+      .then((response) => {
+        // Assuming response looks like: { message: "...", cardId: "..." }
+        const { message, cardId } = response;
+  
+        if (cardId) {
+          alert(`${message}`);
+          setAssignedCard(cardId);
+        } 
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 404) {
+          const message = error.response.data?.message || "No card left to assign";
+          alert(message);
+        } else {
+          console.error('Error:', error);
+          alert("An error occurred during registration");
+        }
+        setAssignedCard(null); // Clear previous card info if error
+      });
   };
+  
 
   return (
     <div className="md:h-[90.8vh] bg-gradient-to-bl from-[#dee3fa] to-[#c8daf8] flex items-center justify-center p-3">
@@ -62,6 +81,17 @@ const Registration = () => {
             >
               Submit
             </motion.button>
+
+            {assignedCard && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+                className="mt-4 p-3 bg-white rounded-lg shadow border border-gray-400 text-center text-black"
+              >
+                <strong>Assigned Card Number:</strong> {assignedCard}
+              </motion.div>
+            )}
           </form>
         </div>
       </motion.div>

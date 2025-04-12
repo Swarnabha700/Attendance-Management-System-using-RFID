@@ -1,25 +1,32 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { getAttendanceByDate } from '../store/apiService'; // Importing API function
 import { motion } from 'framer-motion';
 
 const Report = () => {
     const [date, setDate] = useState('');
     const [attendance, setAttendance] = useState(null);
     const [notFound, setNotFound] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
+        setNotFound(false);
+        setAttendance(null);
+
         try {
-            const response = await axios.post('http://localhost:3000/dailyreport', { date });
-            if (response.data === '404 not found') {
+            const response = await getAttendanceByDate(date);
+
+            if (response === '404 not found') {
                 setNotFound(true);
-                setAttendance(null);
             } else {
-                setNotFound(false);
-                setAttendance(response.data);
+                setAttendance(response);
             }
         } catch (error) {
             console.error('Error fetching attendance data:', error);
+            setNotFound(true);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -33,10 +40,10 @@ const Report = () => {
                 <form onSubmit={handleSubmit} className="flex flex-col items-center mb-8">
                     <label htmlFor="date" className="mb-2 text-lg">Select Date:</label>
                     <input type="date" id="date" value={date} onChange={(e) => setDate(e.target.value)}
-                        className="border border-gray-300 rounded p-2 mb-4" />
+                        className="border border-gray-300 rounded p-2 mb-4" required />
                     <motion.button type="submit" className="bg-[#5d1ec4] text-white py-2 px-6 rounded-lg shadow-md hover:bg-[#5827cc] transition-transform duration-300"
-                        whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                        Submit
+                        whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} disabled={loading}>
+                        {loading ? 'Loading...' : 'Submit'}
                     </motion.button>
                 </form>
 

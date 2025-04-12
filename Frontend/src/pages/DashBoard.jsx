@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Home, BookOpen, User, FileText } from 'lucide-react';
+import { NavLink } from 'react-router-dom';
 
 const DashBoard = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -9,7 +10,7 @@ const DashBoard = () => {
         <div className="min-h-screen bg-gradient-to-bl from-[#e9defa] to-[#fbfcdb] text-gray-800">
             {/* Navbar */}
             <div className="w-full bg-gray-900 p-4 shadow-md flex justify-between items-center">
-                <h1 className="text-xl font-bold text-white">Student Dashboard</h1>
+                <h1 className="text-xl font-bold text-white">Dashboard</h1>
                 <button 
                     className="md:hidden text-white"
                     onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
@@ -58,7 +59,7 @@ const DashBoard = () => {
                                 className="p-6 bg-gradient-to-br from-[#2097ff] to-[#b640ff] rounded-2xl shadow-lg cursor-pointer"
                             >
                                 <h2 className="text-xl font-bold mb-2 text-white">{card}</h2>
-                                <p className="text-sm font-semibold text-black">Click to view details</p>
+                                <NavLink to={`/${card.toLowerCase()}`} className="text-sm font-semibold text-black hover:text-white duration-150">Click to view details</NavLink>
                             </motion.div>
                         ))}
                     </div>

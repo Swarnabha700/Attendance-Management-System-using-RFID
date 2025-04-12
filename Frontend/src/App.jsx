@@ -4,6 +4,7 @@ import Attendance from "./pages/Attendance"
 import Registration from "./pages/Registration"
 import Report from "./pages/Report"
 import DashBoard from "./pages/DashBoard"
+import AttendanceReport from "./pages/AttendanceReport"
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         <Route path="/register" element={<Registration />} />
         <Route path="/report" element={<Report />} />
         <Route path="/dashboard" element={<DashBoard />} />
+        <Route path="/attendance" element={<AttendanceReport />} />
       </Routes>
       
     </BrowserRouter>
