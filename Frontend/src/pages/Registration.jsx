@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { registerStudent } from '../store/apiService';
 import { motion } from 'framer-motion';
+import { toast } from 'react-toastify';
 
 const Registration = () => {
   const [formData, setFormData] = useState({
@@ -26,17 +27,17 @@ const Registration = () => {
         const { message, cardId } = response;
   
         if (cardId) {
-          alert(`${message}`);
+          toast.success(`${message}`);
           setAssignedCard(cardId);
         } 
       })
       .catch((error) => {
         if (error.response && error.response.status === 404) {
           const message = error.response.data?.message || "No card left to assign";
-          alert(message);
+          toast.warning(message);
         } else {
           console.error('Error:', error);
-          alert("An error occurred during registration");
+          toast.error("An error occurred during registration");
         }
         setAssignedCard(null); // Clear previous card info if error
       });
