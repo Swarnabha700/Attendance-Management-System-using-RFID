@@ -3,12 +3,16 @@ import { NavLink } from 'react-router-dom';
 
 const Navbar = () => {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
 
     const toggleMobileMenu = () => setMobileMenuOpen(!isMobileMenuOpen);
-    const toggleProfileMenu = () => setProfileMenuOpen(!isProfileMenuOpen);
-    const closeProfileMenu = () => setProfileMenuOpen(false);
     const closemobileMenu = () => setMobileMenuOpen(false);
+
+    const navLinks = [
+        { path: '/', label: 'Attendance' },
+        { path: '/register', label: 'Registration' },
+        { path: '/report', label: 'Report' },
+        { path: '/dashboard', label: 'Dashboard' }
+    ];
 
     return (
         <nav className="bg-gradient-to-r from-[#660066d0] via-purple-800 to-[#9900cc]">
@@ -39,7 +43,7 @@ const Navbar = () => {
                         </div>
                         <div className="hidden sm:ml-6 sm:block">
                             <div className="flex space-x-4">
-                                {['/', '/register', '/report'].map((path, index) => (
+                                {navLinks.map(({ path, label }, index) => (
                                     <NavLink
                                         key={index}
                                         to={path}
@@ -49,30 +53,11 @@ const Navbar = () => {
                                                 : "text-white hover:bg-white hover:text-black px-3 py-2 rounded-md text-base font-medium"
                                         }
                                     >
-                                        {path === '/' ? 'Attendance' : path === '/register' ? 'Registration' : 'Report'}
+                                        {label}
                                     </NavLink>
                                 ))}
                             </div>
                         </div>
-                    </div>
-
-                    <div className="relative ml-3">
-                        <button
-                            type="button"
-                            onClick={toggleProfileMenu}
-                            className="flex rounded-full bg-gray-800 text-sm focus:outline-none"
-                        >
-                            <span className="sr-only">Open user menu</span>
-                            <img className="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="User" />
-                        </button>
-
-                        {isProfileMenuOpen && (
-                            <div className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                <NavLink to="/dashboard" className="block px-4 py-2 text-sm text-gray-700" onClick={closeProfileMenu}>Your Profile</NavLink>
-                                <NavLink to="#" className="block px-4 py-2 text-sm text-gray-700" onClick={closeProfileMenu}>Settings</NavLink>
-                                <NavLink to="#" className="block px-4 py-2 text-sm text-gray-700" onClick={closeProfileMenu}>Sign out</NavLink>
-                            </div>
-                        )}
                     </div>
                 </div>
             </div>
@@ -80,7 +65,7 @@ const Navbar = () => {
             {isMobileMenuOpen && (
                 <div className="sm:hidden fixed inset-0 top-[58px] bg-black bg-opacity-50 z-50" id="mobile-menu">
                     <div className="space-y-1 px-2 pb-3 pt-2 bg-gradient-to-r from-[#660066d0] via-purple-800 to-[#9900cc]">
-                        {['/', '/register', '/report'].map((path, index) => (
+                        {navLinks.map(({ path, label }, index) => (
                             <NavLink
                                 key={index}
                                 to={path}
@@ -91,7 +76,7 @@ const Navbar = () => {
                                         : "block text-white px-3 py-2 rounded-md text-base font-medium"
                                 }
                             >
-                                {path === '/' ? 'Attendance' : path === '/register' ? 'Registration' : 'Report'}
+                                {label}
                             </NavLink>
                         ))}
                     </div>
