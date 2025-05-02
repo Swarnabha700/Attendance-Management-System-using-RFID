@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { registerStudent } from '../store/apiService';
 import { motion } from 'framer-motion';
